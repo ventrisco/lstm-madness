@@ -74,7 +74,6 @@ SELECT
     ELSE NULL END AS ret
 FROM xlf_etf_data;
 
-# double check offset
 
 
 -- Need to get the max of the earliest of the ticker symbolvs
