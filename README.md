@@ -1,1 +1,2 @@
-# lstm-madness
+# LSTM MADNESS
+
