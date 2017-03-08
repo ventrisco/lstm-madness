@@ -134,7 +134,7 @@ from ggplot import *
 
 conn = psycopg2.connect(dbname="ventris", host="192.168.1.119", user="ventris_admin", password="X4NAdu")
 
-plot_title = "XLF LSTM Train lookback: 1, layers: 1"
+plot_title = "XLF LSTM Train lookback: 1, neurons: 1"
 
 # Plot scatterplot 
 plot_query = """
