@@ -12,8 +12,6 @@ from sklearn.metrics import mean_squared_error
 conn = psycopg2.connect(dbname="ventris", host="127.0.0.1", user="ventris_admin", password="X4NAdu")
 engine = create_engine('postgresql://ventris_admin:X4NAdu@localhost:5432/ventris')
 
-numpy.random.seed(7)
-
 # get x data
 
 x_query = """

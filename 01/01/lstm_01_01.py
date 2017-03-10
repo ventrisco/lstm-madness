@@ -162,3 +162,34 @@ ggplot(pd.melt(plot_cum_df, id_vars=['dt']), aes(x='dt', y='value', color='varia
     geom_line() +\
     ggtitle(plot_title) +\
     labs(y = "Cumulative Returns")
+
+
+plot_profit_query = """
+SELECT
+  dt
+, cum_actual
+, cum_predict
+, SUM(profit) OVER (ORDER BY dt) as cum_profit
+FROM 
+(
+  SELECT
+    dt
+  , SUM(ret) OVER (ORDER BY dt) AS cum_actual
+  , SUM(prediction) OVER (ORDER BY dt) AS cum_predict
+  , CASE WHEN LAG(prediction, 1) OVER (ORDER BY dt) > 0 THEN ret 
+    WHEN LAG(prediction, 1) OVER (ORDER BY dt) < 0 THEN -ret
+    ELSE 0
+    END AS profit
+  FROM lstm_madness_xlf_train_01_01
+  ORDER BY dt
+) p
+"""
+
+plot_cum_profit_df = pd.read_sql_query(plot_profit_query, con=conn)
+
+ggplot(pd.melt(plot_cum_profit_df, id_vars=['dt']), aes(x='dt', y='value', color='variable')) +\
+    geom_line() +\
+    ggtitle(plot_title) +\
+    labs(y = "Cumulative Profit vs Returns")
+
+
