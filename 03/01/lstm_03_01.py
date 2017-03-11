@@ -1,5 +1,5 @@
 """
-LSTM with 128:64 Neurons, 5 time steps, 500 epochs
+LSTM with 5 Neurons, 5 time steps, 1000 epochs
 """
 import os
 import time
@@ -152,18 +152,15 @@ number_of_features = train_x.shape[2]
 
 d = 0.2
 model = Sequential()
-model.add(LSTM(128, input_dim=number_of_features, return_sequences=True))
-model.add(Dropout(d))
-model.add(LSTM(64, input_dim=number_of_features, return_sequences=False))
-model.add(Dropout(d))
-model.add(Dense(16,init='uniform',activation='relu'))        
+model.add(LSTM(5, input_dim=number_of_features))
+model.add(Dropout(d))    
 model.add(Dense(1,init='uniform',activation='linear'))
 model.compile(loss='mse',optimizer='adam',metrics=['accuracy'])
 
 model.fit(
     train_x,
     train_y,
-    batch_size=128,
+    batch_size=32,
     nb_epoch=1000,
     validation_split=0.1,
     verbose=1)
