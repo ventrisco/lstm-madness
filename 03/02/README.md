@@ -1,3 +1,3 @@
 # 03_02
 
-Let's try a smaller batch size (32) and reduce epochs to 500. 
+Let's go back to two periods but only 1 neuron. 

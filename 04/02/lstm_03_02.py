@@ -1,5 +1,5 @@
 """
-LSTM with 128:64 Neurons, 2 time steps, 1000 epochs
+LSTM with 128:64 Neurons, 5 time steps, 500 epochs
 """
 import os
 import time
@@ -20,7 +20,7 @@ conn = psycopg2.connect(dbname="ventris", host="127.0.0.1", user="ventris_admin"
 engine = create_engine('postgresql://ventris_admin:X4NAdu@localhost:5432/ventris')
 
 ITERATION = "03_02"
-TIME_STEPS = 2
+TIME_STEPS = 5
 TRAIN_TABLENAME = "lstm_madness_train_%s" % ITERATION
 
 def df_dataset(query, conn):
@@ -152,8 +152,11 @@ number_of_features = train_x.shape[2]
 
 d = 0.2
 model = Sequential()
-model.add(LSTM(1, input_dim=number_of_features))
+model.add(LSTM(128, input_dim=number_of_features, return_sequences=True))
 model.add(Dropout(d))
+model.add(LSTM(64, input_dim=number_of_features, return_sequences=False))
+model.add(Dropout(d))
+model.add(Dense(16,init='uniform',activation='relu'))        
 model.add(Dense(1,init='uniform',activation='linear'))
 model.compile(loss='mse',optimizer='adam',metrics=['accuracy'])
 
@@ -161,7 +164,7 @@ model.fit(
     train_x,
     train_y,
     batch_size=32,
-    nb_epoch=1000,
+    nb_epoch=500,
     validation_split=0.1,
     verbose=1)
 

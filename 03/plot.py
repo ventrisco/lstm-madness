@@ -3,7 +3,7 @@ import pandas as pd
 from ggplot import *
 conn = psycopg2.connect(dbname="ventris", host="192.168.1.119", user="ventris_admin", password="X4NAdu")
 
-plot_title = "XLF LSTM Train 03, N: 128:64, TS: 2"
+plot_title = "XLF LSTM Train 03, N: 2 TS: 2"
 
 # Plot scatterplot 
 plot_query = """
